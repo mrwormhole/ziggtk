@@ -14,7 +14,7 @@ There are three applications:
 
 ## Build
 
-Ensure libgtk3 development headers are installed (ex: libgtk-3-dev). Tested with zig v0.10.1 on Ubuntu 21.04.
+Ensure libgtk3 development headers are installed.
 
     zig build
 
