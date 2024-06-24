@@ -1,6 +1,6 @@
 const std = @import("std");
 
-const names: [3][]const u8 = .{ "manual", "builder", "embedded" };
+const names = [_][]const u8{ "manual", "builder", "embedded" };
 
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
@@ -16,8 +16,8 @@ pub fn build(b: *std.Build) void {
             .use_llvm = use_llvm,
             .use_lld = use_llvm,
         });
-        exe.linkSystemLibrary("c");
-        exe.linkSystemLibrary("gtk+-3.0");
+        exe.linkLibC();
+        exe.linkSystemLibrary("gtk4");
         b.installArtifact(exe);
 
         const run = b.addRunArtifact(exe);
