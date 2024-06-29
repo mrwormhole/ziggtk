@@ -17,7 +17,15 @@ pub fn build(b: *std.Build) void {
             .use_lld = use_llvm,
         });
         exe.linkLibC();
-        exe.linkSystemLibrary("gtk4");
+        exe.addIncludePath(b.path("./vendor/windows_x64/include")); //renamed include/gtk-4.0 to include/gtk-4
+        exe.addIncludePath(b.path("./vendor/windows_x64/include/gtk-4/"));
+        exe.addIncludePath(b.path("./vendor/windows_x64/include/glib-2.0/"));
+        exe.addIncludePath(b.path("./vendor/windows_x64/include/glib-2.0/glib/"));
+        exe.addLibraryPath(b.path("./vendor/windows_x64/lib")); // contains lib/gtk-4.lib
+        //exe.addLibraryPath(b.path("./vendor/windows_x64/bin")); //not using it because .dll is gtk-4-1.dll
+        exe.addLibraryPath(b.path("./vendor/windows_x64/vulkan-bin"));
+        exe.linkSystemLibrary2("gtk-4", .{ .preferred_link_mode = .static, .use_pkg_config = .no });
+
         b.installArtifact(exe);
 
         const run = b.addRunArtifact(exe);
